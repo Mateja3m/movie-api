@@ -1,14 +1,15 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, createContext } from "react";
 import Movies from "./Movies";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
+import {Container, Button, Card } from "react-bootstrap";
 
+
+const MovieContext = createContext();
 function App() {
   const [movie, setMovie] = useState([]);
 
   const getMovie = async () => {
-  
     const response = await fetch(
       "https://movies-app1.p.rapidapi.com/api/movies",
       {
@@ -28,22 +29,29 @@ function App() {
     setMovie(movie.results);
   };
 
-  
-
   return (
-    <div>
-      {movie.map((movies) => (
-        <Movies
-          key={movies.id}
-          title={movies.title}
-          rating={movies.rating}
-          year={movies.year}
-        />
-      ))}
-      <Button variant="primary" onClick={getMovie}>
-        Click me
-      </Button>
-    </div>
+    <MovieContext.Provider>
+    <Container>
+      <Card>
+        <Card.Body>
+          <Card.Title>Movie List</Card.Title>
+          <Card.Text className="mb-2 text-muted">
+            {movie.map((movies) => (
+              <Movies
+                key={movies._id}
+                title={movies.title}
+                rating={movies.rating}
+                year={movies.year}
+              />
+            ))}
+          </Card.Text>
+          <Button variant="primary" size="lg" onClick={getMovie}>
+            Click me
+          </Button>
+        </Card.Body>
+      </Card>
+    </Container>
+    </MovieContext.Provider>
   );
 }
 

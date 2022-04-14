@@ -1,16 +1,18 @@
 import React from "react";
 
-
-const Movies = ({title, rating, year }) => (
-    <article>
-        <div>
-            <h3>Movie name: {title}</h3>
-            <p>Rating on IMDB: {rating}</p>
-            <p>Year: {year}</p>
-        </div>
-    </article>
-)
-    
-
+const Movies = ({ title, rating, year }) => (
+  <>
+    <h5>
+      <strong>Movie name:</strong> {title}
+    </h5>
+    <p>
+      <strong>Rating on IMDB:</strong> {rating}
+    </p>
+    <p>
+      <strong>Release Year: </strong>
+      {year}
+    </p>
+  </>
+);
 
 export default Movies;
