@@ -1,11 +1,12 @@
 import "./App.css";
 import { useState, createContext } from "react";
 import Movies from "./Movies";
+import Nav from "./Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Container, Button, Card } from "react-bootstrap";
+import { Container, Button, Card } from "react-bootstrap";
 
+export const MovieContext = createContext();
 
-const MovieContext = createContext();
 function App() {
   const [movie, setMovie] = useState([]);
 
@@ -30,27 +31,28 @@ function App() {
   };
 
   return (
-    <MovieContext.Provider>
-    <Container>
-      <Card>
-        <Card.Body>
-          <Card.Title>Movie List</Card.Title>
-          <Card.Text className="mb-2 text-muted">
-            {movie.map((movies) => (
-              <Movies
-                key={movies._id}
-                title={movies.title}
-                rating={movies.rating}
-                year={movies.year}
-              />
-            ))}
-          </Card.Text>
-          <Button variant="primary" size="lg" onClick={getMovie}>
-            Click me
-          </Button>
-        </Card.Body>
-      </Card>
-    </Container>
+    <MovieContext.Provider value={[movie]}>
+      <Container>
+        <Card>
+          <Card.Body>
+            <Card.Title>Movie List</Card.Title>
+            <Nav />
+            <Card.Text className="mb-2 text-muted">
+              {movie.map((movies) => (
+                <Movies
+                  key={movies._id}
+                  title={movies.title}
+                  rating={movies.rating}
+                  year={movies.year}
+                />
+              ))}
+            </Card.Text>
+            <Button variant="primary" size="lg" onClick={getMovie}>
+              Click me
+            </Button>
+          </Card.Body>
+        </Card>
+      </Container>
     </MovieContext.Provider>
   );
 }
