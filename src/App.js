@@ -1,9 +1,11 @@
 import "./App.css";
-import { useState, createContext } from "react";
-import Movies from "./Movies";
-import Nav from "./Nav";
+import { useState, useEffect, createContext } from "react";
+// import Movies from "./Movies";
+// import Nav from "./Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Button, Card } from "react-bootstrap";
+import * as ReactBootStrap from 'react-bootstrap'
+
+import { Container, Button } from "react-bootstrap";
 
 export const MovieContext = createContext();
 
@@ -30,28 +32,36 @@ function App() {
     setMovie(movie.results);
   };
 
+  useEffect(() => {
+    getMovie();
+  }, []);
   return (
     <MovieContext.Provider value={[movie]}>
       <Container>
-        <Card>
-          <Card.Body>
-            <Card.Title>Movie List</Card.Title>
-            <Nav />
-            <Card.Text className="mb-2 text-muted">
-              {movie.map((movies) => (
-                <Movies
-                  key={movies._id}
-                  title={movies.title}
-                  rating={movies.rating}
-                  year={movies.year}
-                />
+        <ReactBootStrap.Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Title</th>
+              <th>Rating</th>
+              <th>Release</th>
+            </tr>
+          </thead>
+          <tbody>
+            {movie &&
+              movie.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.year}</td>
+                  <td>{item.title}</td>
+                  <td>{item.rating}</td>
+                  <td>{item.release}</td>
+                </tr>
               ))}
-            </Card.Text>
-            <Button variant="primary" size="lg" onClick={getMovie}>
-              Click me
-            </Button>
-          </Card.Body>
-        </Card>
+          </tbody>
+        </ReactBootStrap.Table>
+        <Button variant="primary" size="lg" onClick={getMovie}>
+          Click me
+        </Button>
       </Container>
     </MovieContext.Provider>
   );
