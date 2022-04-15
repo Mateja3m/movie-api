@@ -10,8 +10,7 @@ export const MovieContext = createContext();
 
 function App() {
   const [movie, setMovie] = useState([]);
-  const [show, setShow] = useState('');
-
+  const [show, setShow] = useState(true);
 
   const getMovie = async () => {
     const response = await fetch(
@@ -35,24 +34,12 @@ function App() {
 
   useEffect(() => {
     getMovie();
-    setShow(false)
   }, []);
 
-  if (show === true) {
-    return (
-      <MovieContext.Provider>
-        <Container>
-          <Nav />
-          <Button variant="primary" size="lg" onClick={() => setShow(!show)}>
-            Click me
-          </Button>
-        </Container>
-      </MovieContext.Provider>
-    );
-  } else {
-    return (
-      <MovieContext.Provider value={[movie]}>
-        <Container>
+  return (
+    <MovieContext.Provider value={[movie]}>
+      <Container>
+        {show ? (
           <ReactBootStrap.Table striped bordered hover>
             <thead>
               <tr>
@@ -74,14 +61,15 @@ function App() {
                 ))}
             </tbody>
           </ReactBootStrap.Table>
-          <Nav />
-          <Button variant="primary" size="lg" onClick={() => setShow(!show)}>
-            Click me
-          </Button>
-        </Container>
-      </MovieContext.Provider>
-    );
-  }
+        ) : null}
+
+        <Nav />
+        <Button variant="primary" size="lg" onClick={() => setShow(!show)}>
+          Click me
+        </Button>
+      </Container>
+    </MovieContext.Provider>
+  );
 }
 
 export default App;
