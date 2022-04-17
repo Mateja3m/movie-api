@@ -38,8 +38,9 @@ function App() {
 
   return (
     <MovieContext.Provider value={[movie]}>
-      <Container>
+      <Container className='App'>
         {show ? (
+          <>
           <ReactBootStrap.Table striped bordered hover>
             <thead>
               <tr>
@@ -61,9 +62,10 @@ function App() {
                 ))}
             </tbody>
           </ReactBootStrap.Table>
+        <Nav />
+        </>
         ) : null}
 
-        <Nav />
         <Button variant="primary" size="lg" onClick={() => setShow(!show)}>
           Click me
         </Button>
