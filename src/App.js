@@ -4,7 +4,7 @@ import Nav from "./Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as ReactBootStrap from "react-bootstrap";
 
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Card } from "react-bootstrap";
 
 export const MovieContext = createContext();
 
@@ -39,6 +39,7 @@ function App() {
   return (
     <MovieContext.Provider value={[movie]}>
       <Container className='App'>
+        <Card.Title>Movie List</Card.Title>
         {show ? (
           <>
           <ReactBootStrap.Table striped bordered hover>
